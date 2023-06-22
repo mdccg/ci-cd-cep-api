@@ -69,7 +69,7 @@ export class CepController {
   }
 
   async truncateCollection(req: Request, res: Response) {
-    await CepModel.deleteMany({});
+    await this._cepDAO.delete();
     return res.status(204).json({ mensagem: 'DELETE sem WHERE efetuado com sucesso' });
   }
 }

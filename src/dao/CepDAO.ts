@@ -1,3 +1,4 @@
+import { FilterQuery } from 'mongoose';
 import { Cep, CepModel } from './../domains/CepModel';
 
 export class CepDAO {
@@ -20,5 +21,10 @@ export class CepDAO {
     });
     
     return cepObject.at(0);
+  }
+
+  async delete(filter?: FilterQuery<Cep>) {
+    const response = await CepModel.deleteMany(filter);
+    return response.acknowledged;
   }
 }
