@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CepDAO = void 0;
 const CepModel_1 = require("./../domains/CepModel");
+// Adicionando esse comentário só para subir de novo
 class CepDAO {
     save(cep) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -33,6 +34,12 @@ class CepDAO {
                 }
             });
             return cepObject.at(0);
+        });
+    }
+    delete(filter) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield CepModel_1.CepModel.deleteMany(filter);
+            return response.acknowledged;
         });
     }
 }
