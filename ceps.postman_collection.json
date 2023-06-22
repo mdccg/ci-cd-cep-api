@@ -7,6 +7,33 @@
 	},
 	"item": [
 		{
+			"name": "deve retornar status 500 na primeira requisição à API após deploy devido a um desígnio do Vercel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('deve retornar status 500 na primeira requisição à API após deploy devido a um desígnio do Vercel', () => {",
+							"    pm.response.to.have.status(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}",
+					"host": [
+						"{{baseURL}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "deve resetar o banco de dados de teste para evitar conflito ao testar inserção de dados",
 			"event": [
 				{
