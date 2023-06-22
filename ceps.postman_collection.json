@@ -411,7 +411,7 @@
 	"variable": [
 		{
 			"key": "baseURL",
-			"value": "http://localhost:3001",
+			"value": "https://ci-cd-cep-api.vercel.app",
 			"type": "string"
 		}
 	]

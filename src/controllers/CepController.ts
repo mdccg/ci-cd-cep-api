@@ -69,12 +69,7 @@ export class CepController {
   }
 
   async truncateCollection(req: Request, res: Response) {
-    const response = await CepModel.deleteMany({});
-    
-    if (response.acknowledged) {
-      res.status(204).json({ mensagem: 'DELETE sem WHERE efetuado com sucesso' });
-    } else {
-      res.status(500).json({ mensagensDeErro: ['Não foi possível deletar os documentos da coleção `ceps`'] });
-    }
+    await CepModel.deleteMany({});
+    return res.status(204).json({ mensagem: 'DELETE sem WHERE efetuado com sucesso' });
   }
 }
