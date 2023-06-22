@@ -15,9 +15,6 @@
 						"exec": [
 							"pm.test('deve resetar o banco de dados de teste para evitar conflito ao testar inserção de dados', () => {",
 							"    pm.response.to.have.status(204);",
-							"    const response = pm.response.json();",
-							"    const { mensagem } = response;",
-							"    pm.expect(mensagem).to.equal('DELETE sem WHERE efetuado com sucesso');",
 							"});"
 						],
 						"type": "text/javascript"
