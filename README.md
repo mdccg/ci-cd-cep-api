@@ -1,8 +1,8 @@
-# postal-code-api
+# exemplo-ci-cd-api
 
 ## Sumário
 
-- [postal-code-api](#postal-code-api)
+- [exemplo-ci-cd-api](#exemplo-ci-cd-api)
   - [Sumário](#sumário)
   - [Motivação](#motivação)
   - [Pilha de tecnologia](#pilha-de-tecnologia)
@@ -12,33 +12,27 @@
 
 ## Motivação
 
-Este projeto consiste em um app back-end de Códigos de Endereçamento Postal (CEPs) que permite seu cadastro e consulta.
+Este app é uma demonstração do uso de integração e entrega contínuas utilizando o [workflow](https://github.com/mdccg/ci-cd-cep-api/blob/test/.github/workflows/node.js.yml) intitulado "Node.js" e pré-configurado pelo próprio [GitHub Actions](https://github.com/features/actions). O fluxo ouve os commits feitos na branch `test` e faz deploy no domínio de teste do projeto Vercel para testar o que foi commitado. Após o deploy, os testes de ponta a ponta contidos no arquivo [`ceps.postman_collection.json`](./ceps.postman_collection.json) são executados. Se todos os testes passarem, a branch `test` é mesclada com a branch `main` e é feito um segundo deploy, desta vez no domínio de produção.
 
-Existem três _endpoints_ disponíveis na API:
+Foi utilizado como base o repositório [mdccg/postal-code-api](https://github.com/mdccg/postal-code-api), o qual já contém os respectivos testes prontos e um app de exemplo para testar.
 
-- POST `/ceps`: recebe um _payload_ em formato JSON contendo o número do CEP e seu logradouro e salva essas informações no banco de dados;
-- GET `/ceps/busca/cep/:cep`: recebe o número do CEP via _path param_ e retorna o logradouro referente ao CEP consultado;
-- GET `/ceps/busca/logradouro/:logradouro`: recebe o logradouro via _path param_ e retorna o número do CEP referente.
+Este foi o nono repositório de código apresentado no [Curso Superior de TSI](https://www.ifms.edu.br/campi/campus-aquidauana/cursos/graduacao/sistemas-para-internet/sistemas-para-internet) do IFMS como requisito para obtenção da nota parcial das atividades da unidade curricular Linguagem de Programação III.
 
-Para cada _endpoint_ foi implementado um [conjunto de testes](./cypress/e2e/index.cy.ts) que verifica se as respostas estão de acordo com as especificações. Um detalhe importante é que todas as requisições que envolvem CEPs utilizam a máscara #####-### para garantir que o formato de oito dígitos seja seguido.
-
-Este foi o quarto repositório de código apresentado no [Curso Superior de TSI do IFMS](https://www.ifms.edu.br/campi/campus-aquidauana/cursos/graduacao/sistemas-para-internet/sistemas-para-internet) como requisito para obtenção da nota parcial das atividades da unidade curricular Linguagem de Programação III.
-
-| [&larr; Repositório anterior](https://github.com/mdccg/refactored-contact-book-api) | [Próximo repositório &rarr;](https://github.com/mdccg/decoupled-contact-book-api) |
-|-|-|
+| [&larr; Repositório anterior](https://github.com/mdccg/exemplo-ci-cd-api) |
+|-|
 
 ## Pilha de tecnologia
-
-As seguintes tecnologias foram utilizadas para desenvolver este app:
 
 | Papel | Tecnologia |
 |-|-|
 | Ambiente de execução | [Node](https://nodejs.org/en/) |
 | Linguagem de programação | [TypeScript](https://www.typescriptlang.org/) |
-| Back-end | [Express.js](https://expressjs.com/pt-br/) |
-| Framework de teste | [Cypress](https://www.cypress.io/) |
+| Framework web | [Express.js](https://expressjs.com/pt-br/) |
 | Virtualização de banco de dados | [Docker](https://www.docker.com/) |
-| Banco de dados | [MongoDB](https://www.mongodb.com/) |
+| Banco de dados remoto | [MongoDB Atlas](https://www.mongodb.com/cloud) |
+| Framework de teste | [Postman](https://www.postman.com/) |
+| Hospedagem | [Vercel](https://vercel.com/) |
+| Fluxo de integração contínua | Node.js |
 
 ## Como rodar
 
@@ -80,30 +74,23 @@ $ docker-compose down
 
 Mas, não se preocupe. As tuplas inseridas no banco de dados não serão deletadas com a derrubada do _container_.
 
-5. Execute o seguinte comando para iniciar a API:
+5. Execute o seguinte comando para executar o app:
 
 Para npm:
 
 ```console
-$ npm run dev
+$ npm run start
 ```
 
 Para Yarn:
 
 ```console
-$ yarn dev
+$ yarn start
 ```
 
-6. Por fim, execute o seguinte comando para testar a API iniciada:
-
-Para npm:
+6. Para executar os testes, instale a dependência [`newman`](https://npmjs.com/package/newman) globamente e execute o seguinte comando:
 
 ```console
-$ npm run cy:run
-```
-
-Para Yarn:
-
-```console
-$ yarn cy:run
+$ npm i -g newman
+$ newman run ceps.postman_collection.json
 ```
